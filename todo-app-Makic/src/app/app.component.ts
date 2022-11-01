@@ -1,12 +1,10 @@
 import { Component } from '@angular/core';
 
 
-class Person{
-  constructor(
-    public name: string,
-    public description: string,
-    public toDo = 'smth'
-  ){}
+class ToDo{
+  constructor(public personName: string, public description: string, public doneFlag: boolean){
+
+  }
 }
 
 @Component({
@@ -16,10 +14,45 @@ class Person{
 })
 
 export class AppComponent {
-  public person: Person
+
+  private toDos: ToDo[];
+  public toDo: ToDo;
+  public editToDo: ToDo;
+  public isEditing: boolean;
+  private indexOfEdit: number;
 
   constructor(){
-    this.person = new Person("John Doe", "Use the washing machine")
+    this.toDos = [];
+    this.toDo = new ToDo("", "", false);
+    this.isEditing = false;
+    this.editToDo = new ToDo("", "", false);
+    this.indexOfEdit = -1;
+  }
+
+  public getToDos(): ToDo[]{
+      return this.toDos;
+  }
+
+  public create(): void{
+      this.toDos.push(
+        this.toDo
+      );
+  }
+
+  public edit(index: number): void{
+      this.isEditing = true;
+      this.editToDo.personName = this.toDos[index].personName;
+      this.editToDo.description = this.toDos[index].description;
+      this.editToDo.doneFlag = this.toDos[index].doneFlag;
+      this.indexOfEdit = index;
+  }
+
+  public save(): void{
+
+      this.toDos[this.indexOfEdit].personName = this.editToDo.personName;
+      this.toDos[this.indexOfEdit].description = this.editToDo.description;
+      this.toDos[this.indexOfEdit].doneFlag = this.editToDo.doneFlag;
+      this.isEditing = false;
   }
 
 }
