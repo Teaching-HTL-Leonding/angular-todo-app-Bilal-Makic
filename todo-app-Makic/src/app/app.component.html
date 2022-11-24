@@ -1,0 +1,95 @@
+<h2>To Do</h2>
+
+<form>
+  <div>
+    <label
+      >Name:
+      <input type="text" id="name" name="name" [(ngModel)]="toDo.personName" />
+    </label>
+  </div>
+
+  <div>
+    <label
+      >Description:
+      <input
+        type="text"
+        id="description"
+        name="description"
+        [(ngModel)]="toDo.description"
+      />
+    </label>
+  </div>
+
+  <div>
+    <label
+      >Done:
+      <input
+        type="checkbox"
+        id="doneFlag"
+        name="doneFlag"
+        [(ngModel)]="toDo.doneFlag"
+      />
+    </label>
+  </div>
+  <button (click)="create()">Create</button>
+</form>
+
+<table>
+  <tr>
+    <th>Name:</th>
+    <th>Description:</th>
+    <th>Done:</th>
+    <th>Edit:</th>
+  </tr>
+  <tr *ngFor="let toDo of getToDos(); let rowIndex = index">
+    <td>{{ toDo.personName }}</td>
+    <td>{{ toDo.description }}</td>
+    <td>{{ toDo.doneFlag }}</td>
+    <td>
+      <button (click)="edit(rowIndex)">Edit</button>
+      <button (click)="delete(rowIndex)">Delete</button>
+    </td>
+  </tr>
+</table>
+
+<form [hidden]="!isEditing">
+  <h2>EDIT</h2>
+  <div>
+    <label
+      >Name:
+      <input
+        type="text"
+        id="editName"
+        name="editName"
+        [(ngModel)]="editToDo.personName"
+      />
+    </label>
+  </div>
+
+  <div>
+    <label
+      >Description:
+      <input
+        type="text"
+        id="editDescription"
+        name="editDescription"
+        [(ngModel)]="editToDo.description"
+      />
+    </label>
+  </div>
+
+  <div>
+    <label
+      >Done:
+      <input
+        type="checkbox"
+        id="editDoneFlag"
+        name="editDoneFlag"
+        [(ngModel)]="editToDo.doneFlag"
+      />
+    </label>
+  </div>
+  <button (click)="save()">Apply</button>
+</form>
+
+<router-outlet></router-outlet>
